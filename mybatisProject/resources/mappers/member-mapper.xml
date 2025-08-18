@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="memberMapper">
+	<!-- namespace : 해당 mapper 파일의 고유 별칭 -->
+	
+	<!-- 
+		* DML 문의 경우
+		<insert|update|delete id="식별자" [parametetrType="전달받을 자바타입(풀클래스명)|별칭"]>
+		
+		</insert|update|delete>
+		
+		* SELECT문의 경우
+		<select id="식별자" [parametetrType="전달받을 자바타입(풀클래스명)|별칭"] resultType="조회결과를반환하고자하는자바타입" | resultMap="조회결과를뽑아서매핑할id">
+		
+		</select>
+		
+		? 대신에 해당 sql문에 전달된 객체로부터 값을 꺼낼때 #{필드명 또는 변수명 또는 키값}
+		
+	 -->
+
+
+	<insert id="insertMember" parameterType="Member">
+	insert 
+    into member
+    (
+    user_no
+    , user_id
+    , user_pwd
+    , user_name
+    , email
+    , birthday
+    , gender
+    , phone
+    , address
+    )
+    values
+    (
+    seq_uno.nextval
+    , #{userId}
+    , #{userPwd}
+    , #{userName}
+    , #{email}
+    , #{birthday}
+    , #{gender}
+    , #{phone}
+    , #{address}
+    )
+	</insert>	 
+	 
+</mapper>
