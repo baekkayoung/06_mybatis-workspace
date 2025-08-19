@@ -7,6 +7,7 @@ import com.kh.mybatis.member.model.dao.MemberDao;
 import com.kh.mybatis.member.model.vo.Member;
 
 public class MemberServiceImpl implements MemberService {
+	
 private MemberDao mDao = new MemberDao();
 
 	@Override
@@ -27,7 +28,7 @@ private MemberDao mDao = new MemberDao();
          */
         
         SqlSession sqlSession = Template.getSqlSession();  //에 이미 커밋 롤백 클로즈 그런거 있음.! 오늘의 핵심 부분 여기를 이해하자
-        int result = mDao.insertMember(sqlSession, m);
+        int result = mDao.insertMember(sqlSession, m); // 전역으로 정의해서 필요할 때마다 만들 필요 없음
         if(result > 0 ) {
         	sqlSession.commit();
         } else {
@@ -40,8 +41,12 @@ private MemberDao mDao = new MemberDao();
 
 	@Override
 	public Member loginMember(Member m) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		 SqlSession sqlSession = Template.getSqlSession();
+		 Member loginUser = mDao.loginMember(sqlSession, m); 
+		 sqlSession.close();
+		 return loginUser;
+		
 	}
 
 	@Override

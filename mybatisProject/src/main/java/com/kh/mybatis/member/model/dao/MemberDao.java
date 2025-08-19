@@ -36,9 +36,16 @@ public class MemberDao {
 		 * sqlSesison.sql문종류에맞는메소드("매퍼의별칭.쿼리아이디", [그sql문을완성시킬객체]);
 		 * 
 		 */
-		
 		return sqlSession.insert("memberMapper.insertMember", m);
 		
+	}
+
+	public Member loginMember(SqlSession sqlSession, Member m) {
+		
+		// selectOne() : 조회결과가 만일 없다면 null 반환
+		Member loginUser = sqlSession.selectOne("memberMapper.loginMember", m);
+		
+		return loginUser;
 	}
 	
 	
