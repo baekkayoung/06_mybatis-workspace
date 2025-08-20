@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <style>
 	#list-area{
 		border: 1px solid white;
@@ -41,9 +42,19 @@
 					<option value="writer">작성자</option>
 					<option value="title">제목</option>
 					<option value="content">내용</option>
-				</select> <input type="text" name="keyword">
+				</select>
+				<input type="text" name="keyword" value="${ keyword }">
 				<button type="submit">검색</button>
 			</form>
+			
+			<c:if test="${ not empty condition }">
+			<script>
+				$(function(){
+					$("#search-area option[value=${condition}]").attr("selected", true);
+				})
+			</script>
+			</c:if>
+			
 		</div>
 		<br>
     <table id="list-area">
@@ -80,10 +91,17 @@
 			<a href="list.bo?cpage=${ pi.currentPage - 1}">[이전]</a>
 		</c:if>
 		
-		
-		
 		<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-			<a href="list.bo?cpage=${ p }">[${ p }]</a>
+			
+			<c:choose>
+				<c:when test="${ empty condition } ">
+					<a href="list.bo?cpage=${ p }">[${ p }]</a>
+				</c:when>
+				<c:otherwise>
+					<a href="search.bo?cpage=${ p }&condition=${condition}&keyword=${keyword}">[${ p }]</a>
+				</c:otherwise>
+			</c:choose>
+			
 		</c:forEach>
 		
 		<c:if test="${ pi.currentPage ne pi.maxPage }">
